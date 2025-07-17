@@ -1,0 +1,82 @@
+### Blog API Testing Examples
+### Make sure to replace localhost:3000 with your actual server URL
+### Replace JWT tokens with actual tokens received from login/register
+
+### 1. Register a new user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "username": "johndoe",
+  "password": "password123"
+}
+
+### 2. Login user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+### 3. Get user profile (protected)
+GET http://localhost:3000/auth/profile
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 4. Get all users
+GET http://localhost:3000/users
+
+### 5. Get user by ID
+GET http://localhost:3000/users/USER_ID_HERE
+
+### 6. Update user profile (protected - own profile only)
+PATCH http://localhost:3000/users/USER_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "username": "johnupdated"
+}
+
+### 7. Get all published blogs
+GET http://localhost:3000/blogs
+
+### 8. Create a new blog (protected)
+POST http://localhost:3000/blogs
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "My First Blog Post",
+  "content": "This is the content of my first blog post. It contains some interesting information about web development.",
+  "description": "A blog post about web development",
+  "isPublished": true
+}
+
+### 9. Get blog by ID
+GET http://localhost:3000/blogs/BLOG_ID_HERE
+
+### 10. Get blogs by author (protected)
+GET http://localhost:3000/blogs/author/AUTHOR_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 11. Update blog (protected - author only)
+PATCH http://localhost:3000/blogs/BLOG_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "title": "Updated Blog Title",
+  "content": "This is the updated content of my blog post.",
+  "isPublished": false
+}
+
+### 12. Delete blog (protected - author only)
+DELETE http://localhost:3000/blogs/BLOG_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 13. Delete user (protected - own profile only)
+DELETE http://localhost:3000/users/USER_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
