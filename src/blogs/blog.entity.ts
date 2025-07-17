@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from '../users/user.entity';
+import { Like } from '../likes/like.entity';
+import { Comment } from '../comments/comment.entity';
 
 @Entity('blogs')
 export class Blog {
@@ -24,6 +26,12 @@ export class Blog {
 
   @Column()
   authorId: string;
+
+  @OneToMany(() => Like, like => like.blog)
+  likes: Like[];
+
+  @OneToMany(() => Comment, comment => comment.blog)
+  comments: Comment[];
 
   @CreateDateColumn()
   createdAt: Date;

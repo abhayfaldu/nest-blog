@@ -80,3 +80,73 @@ Authorization: Bearer YOUR_JWT_TOKEN_HERE
 ### 13. Delete user (protected - own profile only)
 DELETE http://localhost:3000/users/USER_ID_HERE
 Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### === LIKES ENDPOINTS ===
+
+### 14. Like a blog post (protected)
+POST http://localhost:3000/likes
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "blogId": "BLOG_ID_HERE"
+}
+
+### 15. Unlike a blog post (protected)
+DELETE http://localhost:3000/likes/blog/BLOG_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 16. Get all likes for a blog
+GET http://localhost:3000/likes/blog/BLOG_ID_HERE
+
+### 17. Get likes count for a blog
+GET http://localhost:3000/likes/blog/BLOG_ID_HERE/count
+
+### 18. Check if user has liked a blog (protected)
+GET http://localhost:3000/likes/blog/BLOG_ID_HERE/status
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 19. Get user's liked blogs (protected)
+GET http://localhost:3000/likes/user/my-likes
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### === COMMENTS ENDPOINTS ===
+
+### 20. Create a comment (protected)
+POST http://localhost:3000/comments
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "blogId": "BLOG_ID_HERE",
+  "content": "This is a great blog post! Thanks for sharing."
+}
+
+### 21. Get all comments
+GET http://localhost:3000/comments
+
+### 22. Get comment by ID
+GET http://localhost:3000/comments/COMMENT_ID_HERE
+
+### 23. Get comments for a blog
+GET http://localhost:3000/comments/blog/BLOG_ID_HERE
+
+### 24. Get comments count for a blog
+GET http://localhost:3000/comments/blog/BLOG_ID_HERE/count
+
+### 25. Get user's comments (protected)
+GET http://localhost:3000/comments/user/my-comments
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+### 26. Update a comment (protected - author only)
+PATCH http://localhost:3000/comments/COMMENT_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "content": "Updated comment content here."
+}
+
+### 27. Delete a comment (protected - author only)
+DELETE http://localhost:3000/comments/COMMENT_ID_HERE
+Authorization: Bearer YOUR_JWT_TOKEN_HERE

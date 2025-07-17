@@ -24,6 +24,7 @@ export class BlogsService {
   async findAll(): Promise<Blog[]> {
     return await this.blogsRepository.find({
       where: { isPublished: true },
+      relations: ['likes', 'comments'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -31,6 +32,7 @@ export class BlogsService {
   async findOne(id: string): Promise<Blog> {
     const blog = await this.blogsRepository.findOne({
       where: { id, isPublished: true },
+      relations: ['likes', 'comments'],
     });
 
     if (!blog) {
@@ -43,6 +45,7 @@ export class BlogsService {
   async findByAuthor(authorId: string): Promise<Blog[]> {
     return await this.blogsRepository.find({
       where: { authorId },
+      relations: ['likes', 'comments'],
       order: { createdAt: 'DESC' },
     });
   }

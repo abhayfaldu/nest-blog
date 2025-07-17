@@ -4,8 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { BlogsModule } from './blogs/blogs.module';
 import { AuthModule } from './auth/auth.module';
+import { LikesModule } from './likes/likes.module';
+import { CommentsModule } from './comments/comments.module';
 import { User } from './users/user.entity';
 import { Blog } from './blogs/blog.entity';
+import { Like } from './likes/like.entity';
+import { Comment } from './comments/comment.entity';
 
 @Module({
   imports: [
@@ -21,7 +25,7 @@ import { Blog } from './blogs/blog.entity';
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [User, Blog],
+        entities: [User, Blog, Like, Comment],
         synchronize: true, // Don't use in production
       }),
       inject: [ConfigService],
@@ -29,6 +33,8 @@ import { Blog } from './blogs/blog.entity';
     UsersModule,
     BlogsModule,
     AuthModule,
+    LikesModule,
+    CommentsModule,
   ],
 })
 export class AppModule {}

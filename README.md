@@ -6,8 +6,10 @@ A RESTful blog API built with NestJS, TypeORM, and PostgreSQL featuring user aut
 
 - **User Management**: User registration, login, and profile management
 - **Blog CRUD Operations**: Create, read, update, and delete blog posts
+- **Likes System**: Users can like and unlike blog posts
+- **Comments System**: Users can comment on blog posts and manage their comments
 - **Authentication**: JWT-based authentication system
-- **Authorization**: Users can only edit/delete their own blogs
+- **Authorization**: Users can only edit/delete their own blogs and comments
 - **Database**: PostgreSQL with TypeORM
 - **Validation**: Input validation using class-validator
 - **Security**: Password hashing with bcrypt
@@ -168,6 +170,104 @@ DELETE /blogs/:id
 Authorization: Bearer <your-jwt-token>
 ```
 
+### Likes
+
+#### Like a Blog Post (Protected)
+```http
+POST /likes
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+{
+  "blogId": "blog-uuid-here"
+}
+```
+
+#### Unlike a Blog Post (Protected)
+```http
+DELETE /likes/blog/:blogId
+Authorization: Bearer <your-jwt-token>
+```
+
+#### Get Blog Likes
+```http
+GET /likes/blog/:blogId
+```
+
+#### Get Likes Count
+```http
+GET /likes/blog/:blogId/count
+```
+
+#### Check if User Liked Blog (Protected)
+```http
+GET /likes/blog/:blogId/status
+Authorization: Bearer <your-jwt-token>
+```
+
+#### Get User's Liked Blogs (Protected)
+```http
+GET /likes/user/my-likes
+Authorization: Bearer <your-jwt-token>
+```
+
+### Comments
+
+#### Create Comment (Protected)
+```http
+POST /comments
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+{
+  "blogId": "blog-uuid-here",
+  "content": "Great blog post!"
+}
+```
+
+#### Get All Comments
+```http
+GET /comments
+```
+
+#### Get Comment by ID
+```http
+GET /comments/:id
+```
+
+#### Get Comments for Blog
+```http
+GET /comments/blog/:blogId
+```
+
+#### Get Comments Count
+```http
+GET /comments/blog/:blogId/count
+```
+
+#### Get User's Comments (Protected)
+```http
+GET /comments/user/my-comments
+Authorization: Bearer <your-jwt-token>
+```
+
+#### Update Comment (Protected - Author Only)
+```http
+PATCH /comments/:id
+Authorization: Bearer <your-jwt-token>
+Content-Type: application/json
+
+{
+  "content": "Updated comment content"
+}
+```
+
+#### Delete Comment (Protected - Author Only)
+```http
+DELETE /comments/:id
+Authorization: Bearer <your-jwt-token>
+```
+
 ## Database Schema
 
 ### Users Table
@@ -188,12 +288,29 @@ Authorization: Bearer <your-jwt-token>
 - `createdAt` (Timestamp)
 - `updatedAt` (Timestamp)
 
+### Likes Table
+- `id` (UUID, Primary Key)
+- `userId` (UUID, Foreign Key to Users)
+- `blogId` (UUID, Foreign Key to Blogs)
+- `createdAt` (Timestamp)
+- Unique constraint on (userId, blogId)
+
+### Comments Table
+- `id` (UUID, Primary Key)
+- `content` (Text)
+- `userId` (UUID, Foreign Key to Users)
+- `blogId` (UUID, Foreign Key to Blogs)
+- `createdAt` (Timestamp)
+- `updatedAt` (Timestamp)
+
 ## Authentication & Authorization
 
 - **JWT Tokens**: Used for authentication
 - **Protected Routes**: Require valid JWT token in Authorization header
 - **Blog Authorization**: Users can only edit/delete their own blogs
+- **Comment Authorization**: Users can only edit/delete their own comments
 - **User Authorization**: Users can only update/delete their own profiles
+- **Like System**: Users can like/unlike any published blog (including their own)
 
 ## Error Handling
 
